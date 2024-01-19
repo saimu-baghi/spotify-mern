@@ -30,14 +30,14 @@ export async function POST(req) {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: songName,
       Conditions: [
-        ['content-length-range', 0, 10485760], // up to 10 MB
+        ['content-length-range', 0, 104857600], // up to 10 MB
         ['starts-with', '$Content-Type', songType],
       ],
       Fields: {
         acl: 'public-read',
         'Content-Type': songType,
       },
-      Expires: 600, // Seconds before the presigned post expires. 3600 by default.
+      Expires: 6000, // Seconds before the presigned post expires. 3600 by default.
     })
     const song_path = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${songName}`;
     const image_path = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${imageName}`;
