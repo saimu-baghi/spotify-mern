@@ -9,6 +9,7 @@ import ModalProvider from '@/providers/ModalProvider'
 import { AuthProvider } from '@/providers/AuthProvider'
 
 import getPlaylistsByUserId from '@/actions/getPlaylistsByUserId'
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import './globals.css'
 
@@ -30,6 +31,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={font.className}>
         <ToasterProvider />
+        <SpeedInsights />
         <AuthProvider>
           <ModalProvider playlists={userPlaylists} />
           <Sidebar playlists={userPlaylists}>
