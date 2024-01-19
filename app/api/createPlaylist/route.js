@@ -1,16 +1,13 @@
 import { connectMongoDB } from "@/lib/mongodb";
 import playlists from "@/models/Playlists";
-import { NextResponse } from "next/server";
-import User from "@/models/User";
 
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { S3Client } from '@aws-sdk/client-s3'
-import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(req) {
   const { title, email, contentType } = await req.json();
   try {
-    const fileName=`plylst-img-${title}-${uuidv4()}`
+    const fileName=`plylst-img-${title}`
     const client = new S3Client({ region: process.env.AWS_REGION })
     const { url, fields } = await createPresignedPost(client, {
       Bucket: process.env.AWS_BUCKET_NAME,
@@ -33,6 +30,7 @@ export async function POST(req) {
 
     return Response.json({ url, fields })
   } catch (error) {
+    console.log("error creating playlist", error)
     return Response.json({ error: error.message })
   }
 }
