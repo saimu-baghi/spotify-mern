@@ -1,0 +1,33 @@
+"use client";
+
+import AddToPlayListModal from '@/components/AddToPlayListModal';
+import AuthModal from '@/components/AuthModal';
+import RegisterModal from '@/components/RegisterModal';
+import CreatePlaylistModal from '@/components/CreatePlaylistModal';
+import UploadModal from '@/components/UploadModal';
+
+import React, { useEffect, useState } from 'react'
+
+function ModalProvider({playlists}) {
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect (() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
+
+  return (
+    <>
+    <AuthModal />
+    <RegisterModal />
+    <CreatePlaylistModal />
+    <UploadModal/>
+    <AddToPlayListModal playlists={playlists} />
+    </>
+  )
+}
+
+export default ModalProvider

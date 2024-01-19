@@ -1,0 +1,51 @@
+{
+  "name": "spotify-new",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.490.0",
+    "@aws-sdk/s3-presigned-post": "^3.490.0",
+    "@aws-sdk/s3-request-presigner": "^3.490.0",
+    "@aws-sdk/signature-v4-crt": "^3.489.0",
+    "@babel/preset-env": "^7.22.2",
+    "@babel/preset-react": "^7.22.3",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-slider": "^1.1.2",
+    "babel-jest": "^29.5.0",
+    "bcrypt": "^5.1.1",
+    "mongoose": "^8.0.4",
+    "next": "14.0.4",
+    "next-auth": "^4.24.5",
+    "query-string": "^8.1.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.49.2",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.12.0",
+    "react-router-dom": "^6.20.1",
+    "react-spinners": "^0.13.8",
+    "tailwind-merge": "^2.1.0",
+    "uniqid": "^5.4.0",
+    "use-sound": "^4.0.1",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "isomorphic-fetch": "^3.0.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "msw": "^1.2.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "ts-jest": "^29.1.0"
+  }
+}
