@@ -1,15 +1,17 @@
+import uniqid from "uniqid";
+
 import { connectMongoDB } from "@/lib/mongodb";
 import Song from "@/models/Song";
 
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { S3Client } from '@aws-sdk/client-s3'
-import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(req) {
   const { title, email, imageType, songType, author } = await req.json();
+  const uniqueID = uniqid();
   try {
-    const songName=`song-${title}-${uuidv4()}`
-    const imageName=`sng-img-${title}-${uuidv4()}`
+    const songName=`song-${title}-${uniqueID}`
+    const imageName=`sng-img-${title}-${uniqueID}`
     const client = new S3Client({ region: process.env.AWS_REGION })
     const { url: img_url, fields: img_fields } = await createPresignedPost(client, {
       Bucket: process.env.AWS_BUCKET_NAME,

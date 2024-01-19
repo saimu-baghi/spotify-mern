@@ -1,3 +1,5 @@
+import uniqid from "uniqid";
+
 import { connectMongoDB } from "@/lib/mongodb";
 import playlists from "@/models/Playlists";
 
@@ -6,8 +8,9 @@ import { S3Client } from '@aws-sdk/client-s3'
 
 export async function POST(req) {
   const { title, email, contentType } = await req.json();
+  const uniqueID = uniqid();
   try {
-    const fileName=`plylst-img-${title}`
+    const fileName=`plylst-img-${title}-${uniqueID}`
     const client = new S3Client({ region: process.env.AWS_REGION })
     const { url, fields } = await createPresignedPost(client, {
       Bucket: process.env.AWS_BUCKET_NAME,
