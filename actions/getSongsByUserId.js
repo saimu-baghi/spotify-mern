@@ -7,7 +7,6 @@ import { authOptions } from "../app/api/auth/[...nextauth]/route";
 const getSongsByUserId = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
-    console.log("Please login first");
     return [];
   }
 

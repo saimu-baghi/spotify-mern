@@ -12,7 +12,6 @@ const getPlaylistsByUserId = async () => {
 
 
   if (!session) {
-    console.log("Please login first");
     return [];
   }
 
