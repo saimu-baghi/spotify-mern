@@ -2,7 +2,6 @@
 
 import AddToPlayListModal from '@/components/AddToPlayListModal';
 import AuthModal from '@/components/AuthModal';
-import RegisterModal from '@/components/RegisterModal';
 import CreatePlaylistModal from '@/components/CreatePlaylistModal';
 import UploadModal from '@/components/UploadModal';
 
@@ -22,7 +21,6 @@ function ModalProvider({playlists}) {
   return (
     <>
     <AuthModal />
-    <RegisterModal />
     <CreatePlaylistModal />
     <UploadModal/>
     <AddToPlayListModal playlists={playlists} />

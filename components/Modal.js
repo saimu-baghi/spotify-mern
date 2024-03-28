@@ -3,13 +3,11 @@ import { IoMdClose } from "react-icons/io";
 import React from 'react';
 
 import useAuthModal from "@/hooks/useAuthModal";
-import useRegisterModal from "@/hooks/useRegisterModal";
 import useUploadModal from "@/hooks/useUploadModal";
 import useCreatePlaylistModal from "@/hooks/useCreatePlaylistModal";
 
 function Modal({ isOpen, onChange, title, description, children }) {
     const authModal = useAuthModal();
-    const registerModal = useRegisterModal();
     const uploadModal = useUploadModal();
     const createPlaylistModal = useCreatePlaylistModal();
     return ( 

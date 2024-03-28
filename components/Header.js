@@ -63,7 +63,7 @@ const Header = ({ children, className }) => {
           ) : (
             <>
               <div>
-                <Button onClick={registerModal.onOpen} className="bg-transparent text-neutral-300 font-medium">
+                <Button onClick={authModal.onOpen} className="bg-transparent text-neutral-300 font-medium">
                   Sign up
                 </Button>
               </div>
