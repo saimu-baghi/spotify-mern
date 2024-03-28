@@ -20,14 +20,14 @@ const Sidebar = ({ children, playlists }) => {
     {
       icon: HiHome,
       label: 'Home',
-      active: pathname !== '/search',
-      href: '/'
+      active: pathname !== '/home/search',
+      href: '/home'
     },
     {
       icon: BiSearch,
       label: 'Search',
-      href: '/search',
-      active: pathname === '/search'
+      href: '/home/search',
+      active: pathname === '/home/search'
     },
   ], [pathname]);
 

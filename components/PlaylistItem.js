@@ -10,7 +10,7 @@ const PlaylistItem = ({ data }) => {
   return (
     <Link
       href={{
-        pathname: `/${data.title}`,
+        pathname: `/home/${data.title}`,
         query: {
           id: data._id,
         },

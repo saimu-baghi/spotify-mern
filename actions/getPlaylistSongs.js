@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import PlaylistSong from "@/models/PlaylistSong";
 
 import { getServerSession } from "next-auth";
@@ -12,7 +12,7 @@ const getPlaylistSongs = async ({selectedPlaylist}) => {
 
   const user_email = session?.user?.email;
 
-  await connectMongoDB();
+  await connectToDB();
     const data = await PlaylistSong.find({ user_email, playlist_id: selectedPlaylist }).select("song_id");
 
   return data || [];

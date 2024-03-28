@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import PlaylistSong from "@/models/PlaylistSong";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -14,7 +14,7 @@ export async function POST(req) {
   const user_email = session?.user?.email;
 
   try {
-    await connectMongoDB();
+    await connectToDB();
     const { playlist_id, song_id } = await req.json();
     await PlaylistSong.deleteOne({ playlist_id, user_email, song_id });
 

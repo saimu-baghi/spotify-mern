@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import LikedSong from "@/models/LikedSong";
 
 import { getServerSession } from "next-auth";
@@ -13,7 +13,7 @@ export async function POST(req) {
     const { song_id } = await req.json();
     const user_email = session?.user?.email;
     try {
-        await connectMongoDB();
+        await connectToDB();
         const data = await LikedSong.create({ user_email, song_id });
 
         return Response.json({ message: "created" });

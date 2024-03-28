@@ -1,6 +1,6 @@
 import uniqid from "uniqid";
 
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import playlists from "@/models/Playlists";
 
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
@@ -26,7 +26,7 @@ export async function POST(req) {
       Expires: 600, // Seconds before the presigned post expires. 3600 by default.
     })
     const image_path = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${fileName}`;
-    await connectMongoDB();
+    await connectToDB();
     // const user = await User.findOne({ email }).select("_id");
     // const user_id= user._id;
     await playlists.create({ title, image_path, user_email: email });

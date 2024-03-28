@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import playlists from "@/models/Playlists";
 
 import { getServerSession } from "next-auth";
@@ -17,7 +17,7 @@ const getPlaylistsByUserId = async () => {
 
   const user_email = session?.user?.email;
 
-  await connectMongoDB();
+  await connectToDB();
     const data = await playlists.find({ user_email })
     .sort({ created_at: -1 })
     .exec();

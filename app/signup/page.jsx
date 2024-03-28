@@ -7,14 +7,14 @@ import { redirect } from "next/navigation";
 import { Form } from "@/lib/form";
 import { generateId } from "lucia";
 const mongoose = require("mongoose");
+import { Users } from "../lib/models";
 
-import {connectMongoDB} from '@/lib/mongodb';
-
+import { connectToDB } from "../lib/utils";
 
 export default async function Page() {
 	const { user } = await validateRequest();
 	if (user) {
-		return redirect("/admin");
+		return redirect("/");
 	}
 	return (
 		<>
@@ -23,11 +23,14 @@ export default async function Page() {
 				<label htmlFor="username">Username</label>
 				<input name="username" id="username" />
 				<br />
+				<label htmlFor="email">Email</label>
+				<input name="email" id="email" />
+				<br />
+				<label htmlFor="isAdmin">isAdmin?</label>
+				<input type="checkbox" id="isAdmin" name="isAdmin" />
+				<br />
 				<label htmlFor="password">Password</label>
 				<input type="password" name="password" id="password" />
-				<br />
-				<label htmlFor="email">Email</label>
-				<input type="email" name="email" id="email" />
 				<br />
 				<button>Continue</button>
 			</Form>
@@ -57,59 +60,18 @@ async function signup(_, formData) {
 			error: "Invalid password"
 		};
 	}
-	const email = formData.get("email");
-
 
 	// const hashedPassword = await new Argon2id().hash(password);
 	const hashedPassword = await bcryptHash(password, 10);
 	const userId = generateId(15);
+	const email = formData.get("email");
+	const isAdmin = formData.get("isAdmin");
+
 
 	try {
-		await connectMongoDB()
-		
-		const User = mongoose.models["User"] || mongoose.model(
-			"User",
-			new mongoose.Schema(
-				{
-					username: {
-						type: String,
-						// required: true,
-						unique: true,
-						min: 3,
-						max: 20,
-					  },
-					  email: {
-						type: String,
-						required: true,
-						unique: true,
-					  },
-					  password: {
-						type: String,
-						required: true,
-					  },
-					  img: {
-						type: String,
-					  },
-					  isAdmin: {
-						type: Boolean,
-						default: false,
-					  },
-					  isActive: {
-						type: Boolean,
-						default: true,
-					  },
-					  phone: {
-						type: String,
-					  },
-					  address: {
-						type: String,
-					  },
-					},
-					{ timestamps: true }
-			)
-		);
+		await connectToDB()
 
-		await User.create({ username: username, email: email, password: hashedPassword });
+		await Users.create({ _id: userId, username: username, email: email, password: hashedPassword });
 	  
 		const session = await lucia.createSession(userId, {});
 		const sessionCookie = lucia.createSessionCookie(session.id);
@@ -124,5 +86,5 @@ async function signup(_, formData) {
 		  error: "An unknown error occurred",
 		};
 	  }
-	return redirect("/admin");
+	return redirect("/");
 }

@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import Song from "@/models/Song";
 
 import getSongs from "./getSongs";
@@ -10,7 +10,7 @@ const getSongsByTitle = async (title) => {
     return allSongs;
   }
   const regex = new RegExp(title, 'i');
-  await connectMongoDB();
+  await connectToDB();
     const data = await Song.find({ title: { $regex: regex } })
     .sort({ created_at: -1 })
     .exec();

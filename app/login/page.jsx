@@ -7,23 +7,26 @@ import { cookies } from "next/headers";
 import { lucia, validateRequest } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Form } from "@/lib/form";
-const mongoose = require("mongoose");
-import styles from "@/app/ui/login/loginForm/loginForm.module.css";
+import { Users } from "../lib/models";
 
 import { connectToDB } from "../lib/utils";
 
 export default async function Page() {
 	const { user } = await validateRequest();
 	if (user) {
-		return redirect("/admin");
+		return redirect("/");
 	}
 	return (
 		<>
 			<h1>Sign in</h1>
-			<Form action={login} className={styles.form}>
-				<input name="username" id="username" placeholder="Username" />
-				<input type="password" name="password" id="password" placeholder="Password" />
-				<button className="sign">Continue</button>
+			<Form action={login}>
+				<label htmlFor="username">Username</label>
+				<input name="username" id="username" />
+				<br />
+				<label htmlFor="password">Password</label>
+				<input type="password" name="password" id="password" />
+				<br />
+				<button>Continue</button>
 			</Form>
 			<Link href="/signup">Create an account</Link>
 		</>
@@ -56,29 +59,10 @@ async function login(_, formData){
 		//   useUnifiedTopology: true,
 		// });
 		await connectToDB();
-	  
-		const User = mongoose.models["User"] || mongoose.model(
-			"User",
-			new mongoose.Schema(
-				{
-					_id: {
-						type: String,
-						required: true,
-					},
-					username: {
-						type: String,
-					},
-					password: {
-						type: String,
-					},
-				},
-				{ _id: false }
-			)
-		);
 
-		const existingUser = await User.findOne({ username: username });
+		const existingUser = await Users.findOne({ username: username });
 	  
-		if (!existingUser) {
+		if (!existingUser || !existingUser.isAdmin) {
 		  return {
 			error: "Incorrect username or password",
 		  };
@@ -102,7 +86,7 @@ async function login(_, formData){
 		const session = await lucia.createSession(existingUser.id, {});
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-		return redirect("/admin");
+		return redirect("/");
 	  } catch (e) {
 		return {
 		  error: "An unknown error occurred",

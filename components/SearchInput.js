@@ -19,7 +19,7 @@ const SearchInput = () => {
     };
 
     const url = qs.stringifyUrl({
-      url: '/search',
+      url: '/home/search',
       query
     });
 

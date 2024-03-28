@@ -2,16 +2,23 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    _id: {
       type: String,
       required: true,
+    },
+    name: {
+      type: String,
+    },
+    username: {
+      type: String,
+      // required: true,
       unique: true,
       min: 3,
       max: 20,
     },
     email: {
       type: String,
-      // required: true,
+      required: true,
       unique: true,
     },
     password: {
@@ -36,6 +43,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
   },
+  { _id: false },
   { timestamps: true }
 );
 
@@ -73,6 +81,27 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const User = mongoose.models.User || mongoose.model("User", userSchema);
+const sessionSchema = new mongoose.Schema(
+  {
+    _id: {
+      type: String,
+      required: true,
+    },
+    user_id: {
+      type: String,
+      required: true,
+    },
+    expires_at: {
+      type: Date,
+      required: true,
+    },
+  },
+  { _id: false }
+);
+
+export const Users =
+  mongoose.models.Users || mongoose.model("Users", userSchema);
+export const Session =
+  mongoose.models.Session || mongoose.model("Session", sessionSchema);
 export const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);

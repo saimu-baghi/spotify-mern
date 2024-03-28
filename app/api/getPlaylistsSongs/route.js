@@ -1,9 +1,9 @@
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import Song from "@/models/Song";
 import { NextResponse } from "next/server";
 export async function POST(req, res) {
   try {
-    await connectMongoDB();
+    await connectToDB();
     const { song_ids } = await req.json();
 
     const songs = await Song.find({ _id: { $in: song_ids } }); // Use $in to find songs with multiple IDs

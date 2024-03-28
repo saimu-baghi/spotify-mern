@@ -1,6 +1,6 @@
 import uniqid from "uniqid";
 
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import Song from "@/models/Song";
 
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
@@ -41,7 +41,7 @@ export async function POST(req) {
     })
     const song_path = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${songName}`;
     const image_path = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${imageName}`;
-    await connectMongoDB();
+    await connectToDB();
     // const user = await User.findOne({ email }).select("_id");
     // const user_id= user._id;
     await Song.create({ title, image_path, user_email: email, song_path, author });

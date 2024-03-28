@@ -1,9 +1,9 @@
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import Song from "@/models/Song";
 import { NextResponse } from "next/server";
 export async function POST(req, res) {
   try {
-    await connectMongoDB();
+    await connectToDB();
     const { song_id } = await req.json();
 
     const song = await Song.find({ _id: song_id }) 

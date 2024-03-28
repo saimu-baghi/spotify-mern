@@ -1,5 +1,5 @@
 // api/removelikedsongs
-import { connectMongoDB } from "@/lib/mongodb";
+import { connectToDB } from "@/app/lib/utils";
 import LikedSong from "@/models/LikedSong";
 
 import { getServerSession } from "next-auth";
@@ -15,7 +15,7 @@ export async function POST(req) {
   const user_email = session?.user?.email;
 
   try {
-    await connectMongoDB();
+    await connectToDB();
     const result = await LikedSong.deleteOne({ user_email, song_id });
 
     if (result.deletedCount > 0) {

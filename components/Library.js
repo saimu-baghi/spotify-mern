@@ -55,8 +55,8 @@ const Library = ({
         />
       </div>
       <div className="flex flex-col gap-y-2 mt-4 px-3">
-      <ListItem image="/images/uploads.png" name="Your Uploads" href="uploads" />
-      <ListItem image="/images/liked.png" name="Liked Songs" href="liked" />
+      <ListItem image="/images/uploads.png" name="Your Uploads" href="home/uploads" />
+      <ListItem image="/images/liked.png" name="Liked Songs" href="home/liked" />
       {playlists.map((item) => (
         <PlaylistItem key={item.id} data={item} />
       ))}
