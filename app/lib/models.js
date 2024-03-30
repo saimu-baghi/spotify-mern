@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-      // required: true,
+      required: true,
       unique: true,
       min: 3,
       max: 20,
@@ -43,8 +43,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { _id: false },
-  { timestamps: true }
+  { timestamps: true, _id: false }
 );
 
 const productSchema = new mongoose.Schema(

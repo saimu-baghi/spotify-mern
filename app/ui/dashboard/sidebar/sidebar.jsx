@@ -22,11 +22,11 @@ const menuItems = [
   {
     title: "Pages",
     list: [
-      {
-        title: "Dashboard",
-        path: "/admin",
-        icon: <MdDashboard />,
-      },
+      // {
+      //   title: "Dashboard",
+      //   path: "/admin",
+      //   icon: <MdDashboard />,
+      // },
       {
         title: "Users",
         path: "/admin/users",

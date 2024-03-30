@@ -184,8 +184,18 @@ const AuthModal = ({ session }) => {
       }
 
       // If registration is successful, display a success toast
-      toast.success(responseData.message);
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+      
+      if (res.error) {
+        toast.error("Invalid Credentials");
+        return;
+      }
 
+      toast.success(responseData.message);
       setMessageSent(true);
       router.refresh();
       setIsLoading(false);

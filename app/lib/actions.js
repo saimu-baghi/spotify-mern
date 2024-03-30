@@ -1,10 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Product, User } from "./models";
+import { Product, Users } from "./models";
 import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
-import bcrypt from "bcrypt";
+import { hash as bcryptHash } from "bcrypt";
+import { generateId } from "lucia";
 
 export const addUser = async (formData) => {
   const { username, email, password, phone, address, isAdmin, isActive } =
@@ -13,10 +14,11 @@ export const addUser = async (formData) => {
   try {
     connectToDB();
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcryptHash(password, 10);
+    const userId = generateId(15);
 
-    const newUser = new User({
+    const newUser = new Users({
+      _id: userId,
       username,
       email,
       password: hashedPassword,
@@ -32,8 +34,8 @@ export const addUser = async (formData) => {
     throw new Error("Failed to create user!");
   }
 
-  revalidatePath("/dashboard/users");
-  redirect("/dashboard/users");
+  revalidatePath("/admin/users");
+  redirect("/admin/users");
 };
 
 export const updateUser = async (formData) => {
@@ -42,11 +44,12 @@ export const updateUser = async (formData) => {
 
   try {
     connectToDB();
+    const hashedPassword = await bcryptHash(password, 10);
 
     const updateFields = {
       username,
       email,
-      password,
+      password: hashedPassword,
       phone,
       address,
       isAdmin,
@@ -58,14 +61,14 @@ export const updateUser = async (formData) => {
         (updateFields[key] === "" || undefined) && delete updateFields[key]
     );
 
-    await User.findByIdAndUpdate(id, updateFields);
+    await Users.findByIdAndUpdate(id, updateFields);
   } catch (err) {
     console.log(err);
     throw new Error("Failed to update user!");
   }
 
-  revalidatePath("/dashboard/users");
-  redirect("/dashboard/users");
+  revalidatePath("/admin/users");
+  redirect("/admin/users");
 };
 
 export const addProduct = async (formData) => {
@@ -90,8 +93,8 @@ export const addProduct = async (formData) => {
     throw new Error("Failed to create product!");
   }
 
-  revalidatePath("/dashboard/products");
-  redirect("/dashboard/products");
+  revalidatePath("/admin/products");
+  redirect("/admin/products");
 };
 
 export const updateProduct = async (formData) => {
@@ -121,8 +124,8 @@ export const updateProduct = async (formData) => {
     throw new Error("Failed to update product!");
   }
 
-  revalidatePath("/dashboard/products");
-  redirect("/dashboard/products");
+  revalidatePath("/admin/products");
+  redirect("/admin/products");
 };
 
 export const deleteUser = async (formData) => {
@@ -130,13 +133,13 @@ export const deleteUser = async (formData) => {
 
   try {
     connectToDB();
-    await User.findByIdAndDelete(id);
+    await Users.findByIdAndDelete(id);
   } catch (err) {
     console.log(err);
     throw new Error("Failed to delete user!");
   }
 
-  revalidatePath("/dashboard/products");
+  revalidatePath("/admin/products");
 };
 
 export const deleteProduct = async (formData) => {
@@ -150,7 +153,7 @@ export const deleteProduct = async (formData) => {
     throw new Error("Failed to delete product!");
   }
 
-  revalidatePath("/dashboard/products");
+  revalidatePath("/admin/products");
 };
 
 export const authenticate = async (prevState, formData) => {
