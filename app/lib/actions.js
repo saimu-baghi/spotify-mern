@@ -8,6 +8,7 @@ import { hash as bcryptHash } from "bcrypt";
 import { generateId } from "lucia";
 import Playlists from "@/models/Playlists";
 import Song from "@/models/Song";
+import PlaylistSong from "@/models/PlaylistSong";
 
 export const addUser = async (formData) => {
   const { username, email, password, phone, address, isAdmin, isActive } =
@@ -269,6 +270,20 @@ export const deleteSong = async (formData) => {
   }
 
   revalidatePath("/admin/songs");
+};
+
+export const removeFromPlaylist = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+    await PlaylistSong.deleteOne({ song_id: id });
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to delete song!");
+  }
+
+  revalidatePath("/admin/playlists/[id]");
 };
 
 export const deleteProduct = async (formData) => {

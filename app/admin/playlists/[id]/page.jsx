@@ -5,7 +5,8 @@ import stylesSongs from "@/app/ui/dashboard/songs/songs.module.css";
 import Image from "next/image";
 // import Search from "@/app/ui/dashboard/search/search";
 import Link from "next/link";
-import { deletePlaylist } from "@/app/lib/actions";
+import { removeFromPlaylist } from "@/app/lib/actions";
+export const revalidate = 0;
 
 const SingleUserPage = async ({ params }) => {
   const { id } = params;
@@ -71,10 +72,10 @@ const SingleUserPage = async ({ params }) => {
                       View
                     </button>
                   </Link>
-                  <form action={deletePlaylist}>
+                  <form action={removeFromPlaylist}>
                     <input type="hidden" name="id" value={(song.id)} />
                     <button className={`${stylesSongs.button} ${stylesSongs.delete}`}>
-                      Delete
+                      Remove
                     </button>
                   </form>
                 </div>
