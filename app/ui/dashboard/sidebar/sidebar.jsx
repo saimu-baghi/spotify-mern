@@ -10,6 +10,8 @@ import {
   MdAnalytics,
   MdPeople,
   MdOutlineSettings,
+  MdPlaylistPlay,
+  MdMusicNote,
   MdHelpCenter,
   MdLogout,
 } from "react-icons/md";
@@ -33,45 +35,55 @@ const menuItems = [
         icon: <MdSupervisedUserCircle />,
       },
       {
-        title: "Products",
-        path: "/admin/products",
-        icon: <MdShoppingBag />,
+        title: "Songs",
+        path: "/admin/songs",
+        icon: <MdMusicNote />,
       },
       {
-        title: "Transactions",
-        path: "/admin/transactions",
-        icon: <MdAttachMoney />,
+        title: "Playlists",
+        path: "/admin/playlists",
+        icon: <MdPlaylistPlay />,
       },
+      // {
+      //   title: "Products",
+      //   path: "/admin/products",
+      //   icon: <MdShoppingBag />,
+      // },
+      // {
+      //   title: "Transactions",
+      //   path: "/admin/transactions",
+      //   icon: <MdAttachMoney />,
+      // },
     ],
   },
-  {
-    title: "Analytics",
-    list: [
-      {
-        title: "Revenue",
-        path: "/admin/revenue",
-        icon: <MdWork />,
-      },
-      {
-        title: "Reports",
-        path: "/admin/reports",
-        icon: <MdAnalytics />,
-      },
-      {
-        title: "Teams",
-        path: "/admin/teams",
-        icon: <MdPeople />,
-      },
-    ],
-  },
+  // {
+  //   title: "Analytics",
+  //   list: [
+  //     {
+  //       title: "Revenue",
+  //       path: "/admin/revenue",
+  //       icon: <MdWork />,
+  //     },
+  //     {
+  //       title: "Reports",
+  //       path: "/admin/reports",
+  //       icon: <MdAnalytics />,
+  //     },
+  //     {
+  //       title: "Teams",
+  //       path: "/admin/teams",
+  //       icon: <MdPeople />,
+  //     },
+  //   ],
+  // },
   {
     title: "User",
     list: [
-      {
-        title: "Settings",
-        path: "/admin/settings",
-        icon: <MdOutlineSettings />,
-      },
+      // {
+      //   title: "Settings",
+      //   path: "/admin/settings",
+      //   icon: <MdOutlineSettings />,
+      // },
       {
         title: "Help",
         path: "/admin/help",

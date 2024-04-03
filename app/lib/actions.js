@@ -6,6 +6,8 @@ import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
 import { hash as bcryptHash } from "bcrypt";
 import { generateId } from "lucia";
+import Playlists from "@/models/Playlists";
+import Song from "@/models/Song";
 
 export const addUser = async (formData) => {
   const { username, email, password, phone, address, isAdmin, isActive } =
@@ -36,6 +38,53 @@ export const addUser = async (formData) => {
 
   revalidatePath("/admin/users");
   redirect("/admin/users");
+};
+
+export const addSong = async (formData) => {
+  const { title, author } =
+    Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+
+    const newSong = new Song({
+      title,
+      author,
+    });
+
+    await newSong.save();
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to add a song!");
+  }
+
+  revalidatePath("/admin/songs");
+  redirect("/admin/songs");
+};
+
+export const addPlaylist = async (formData) => {
+  const { title, user_email } =
+    Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+
+    const newPlaylist = new Playlists({
+      title,
+      user_email,
+      image_path:" "
+    });
+
+    await newPlaylist.save();
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to create a playlist!");
+  }
+
+  revalidatePath("/admin/playlist");
+  redirect("/admin/playlists");
 };
 
 export const updateUser = async (formData) => {
@@ -69,6 +118,58 @@ export const updateUser = async (formData) => {
 
   revalidatePath("/admin/users");
   redirect("/admin/users");
+};
+
+export const updateSong = async (formData) => {
+  const { title, user_email, author } =
+    Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+    const updateFields = {
+      title, user_email, author
+    };
+
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || undefined) && delete updateFields[key]
+    );
+
+    await Users.findByIdAndUpdate(id, updateFields);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to update song!");
+  }
+
+  revalidatePath("/admin/songs");
+  redirect("/admin/songs");
+};
+
+export const updatePlaylist = async (formData) => {
+  const { title, user_email } =
+    Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+
+    const updateFields = {
+      title, user_email
+    };
+
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || undefined) && delete updateFields[key]
+    );
+
+    await Playlists.findByIdAndUpdate(id, updateFields);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to update playlist!");
+  }
+
+  revalidatePath("/admin/playlists");
+  redirect("/admin/playlists");
 };
 
 export const addProduct = async (formData) => {
@@ -139,7 +240,35 @@ export const deleteUser = async (formData) => {
     throw new Error("Failed to delete user!");
   }
 
-  revalidatePath("/admin/products");
+  revalidatePath("/admin/users");
+};
+
+export const deletePlaylist = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+    await Playlists.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to delete song!");
+  }
+
+  revalidatePath("/admin/playlists");
+};
+
+export const deleteSong = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    connectToDB();
+    await Song.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to delete song!");
+  }
+
+  revalidatePath("/admin/songs");
 };
 
 export const deleteProduct = async (formData) => {

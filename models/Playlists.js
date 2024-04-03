@@ -12,7 +12,6 @@ const PlaylistsSchema = new mongoose.Schema({
     },
     image_path: {
         type: String,
-        required: [true, "Please provide an image path for the playlist."],
     },
     user_email: {
         type: String,
