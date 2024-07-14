@@ -49,10 +49,7 @@ async function login(_, formData){
 	// }
 
 	try {
-		// await mongoose.connect("mongodb+srv://admin:admin123@cluster0.fbwnsy1.mongodb.net/adminPage?retryWrites=true&w=majority", {
-		//   useNewUrlParser: true,
-		//   useUnifiedTopology: true,
-		// });
+		
 		await connectToDB();
 
 		const existingUser = await Users.findOne({ username: username });
